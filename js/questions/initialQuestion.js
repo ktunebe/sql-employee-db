@@ -1,4 +1,3 @@
-
 const inquirer = require('inquirer')
 const pool = require('../../db/dbConnection')
 
@@ -19,9 +18,5 @@ const initialQuestion = {
     ],
     loop: false
 }
-
-
-
-
 
 module.exports = {initialQuestion}

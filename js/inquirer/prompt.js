@@ -3,13 +3,10 @@ const inquirer = require('inquirer')
 const runPrompt = async (questions) => {
     try {
         const answers = await inquirer.prompt(questions);
-        console.log(answers);
         return answers;
-    } catch (error) {
-        console.error('Error during prompting:', error);
+    } catch (err) {
+        console.error('Error during prompting: ', err);
     }
 }
 
-module.exports = runPrompt
-
-
+module.exports = {runPrompt}

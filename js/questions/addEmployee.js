@@ -1,11 +1,7 @@
 require('dotenv').config()
 const pool = require('../../db/dbConnection')
-const runPrompt = require('../inquirer/prompt')
+const {runPrompt} = require('../inquirer/prompt')
 const {getManagersList, getRolesList} = require('../../db/getFromDb')
-
-
-
-
 
 const newEmployee = async () => {
     // Get roles and managers from db
@@ -27,13 +23,15 @@ const newEmployee = async () => {
             type: 'list',
             message: 'Choose employee role:',
             name: 'newEmployeeRole',
-            choices: employeeRoles
+            choices: employeeRoles,
+            loop: false
         },
         {
             type: 'list',
             message: 'Choose employee manager:',
             name: 'newEmployeeManager',
-            choices: managers
+            choices: managers,
+            loop: false
         },
     ]
 

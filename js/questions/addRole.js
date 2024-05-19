@@ -1,6 +1,6 @@
 require('dotenv').config()
 const pool = require('../../db/dbConnection')
-const runPrompt = require('../inquirer/prompt')
+const {runPrompt} = require('../inquirer/prompt')
 const {getDepartmentsList} = require('../../db/getFromDb')
 
 const newRole = async () => {
@@ -15,16 +15,21 @@ const newRole = async () => {
             validate: (input) => input !== ''
         },
         {
-            type: 'number',
             message: 'Enter salary for new role:',
             name: 'newRoleSalary',
-            validate: (input) => !isNaN(input)
+            validate: (input) => {
+                if (isNaN(input) || input <= 0) {
+                    return 'Please enter a valid number:'
+                }
+                return true
+            }
         },
         {
             type: 'list',
             message: 'Choose department for role:',
             name: 'newRoleDepartment',
-            choices: departments
+            choices: departments,
+            loop: false
         },
     ]
 
@@ -39,17 +44,16 @@ const newRole = async () => {
     const foundDepartment = await pool.query(`SELECT id FROM departments WHERE name = '${newRoleDepartment}';`)
     const departmentId = parseInt(foundDepartment.rows.map(row => row.id))
 
-    console.log(typeof newRoleSalary)
+    // Convert salary string from answers into an integer for the DB
+    const newRoleSalaryToInt = parseInt(newRoleSalary)
 
     // Add new role to db
     await pool.query(
         `INSERT INTO roles (title, salary, department)
-        VALUES ('${newRoleTitle}', ${newRoleSalary}, ${departmentId});`
+        VALUES ('${newRoleTitle}', ${newRoleSalaryToInt}, ${departmentId});`
     )
 
-    console.log('New Role Added!')
+    console.log('\nNew Role Added!\n')
 }
-
-// newRole()
 
 module.exports = {newRole}

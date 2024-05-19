@@ -1,6 +1,15 @@
 require('dotenv').config()
 const pool = require('./dbConnection')
 
+// Get all employee names from db
+const getEmployeeNames = async () => {
+    const employees = []
+    const results = await pool.query(`SELECT first_name, last_name FROM employees;`)
+    results.rows.forEach(result => employees.push(`${result.first_name} ${result.last_name}`))
+    employees.push('Cancel')
+    return employees
+}
+
 // Get roles from db
 const getRolesList = async () => {
     const roles = []
@@ -24,4 +33,4 @@ const getDepartmentsList = async () => {
     return departments
 }
 
-module.exports = {getDepartmentsList, getManagersList, getRolesList}
+module.exports = {getEmployeeNames, getDepartmentsList, getManagersList, getRolesList}
