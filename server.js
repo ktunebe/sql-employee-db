@@ -8,6 +8,8 @@ const pool = require('./db/dbConnection')
 const express = require('express')
 const {initialQuestion} = require('./js/questions/questionsMain')
 const {newEmployee} = require('./js/questions/addEmployee')
+const {newRole} = require('./js/questions/addRole')
+const {newDepartment} = require('./js/questions/addDepartment')
 const {getDepartmentsList, getManagersList, getRolesList} = require('./db/getFromDb')
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -50,6 +52,13 @@ const results = async () => {
         init()
     } else if (initialPromptChoice === 'Add an Employee') {
         await newEmployee()
+        init()
+    } else if (initialPromptChoice === 'Add a Role') {
+        await newRole()
+        init()
+    } else if (initialPromptChoice === 'Add a Department') {
+        await newDepartment()
+        init()
     }
     else if (initialPromptChoice === 'Exit') {
         return

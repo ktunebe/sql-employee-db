@@ -8,6 +8,7 @@ const {getManagersList, getRolesList} = require('../../db/getFromDb')
 
 
 const newEmployee = async () => {
+    // Get roles and managers from db
     const employeeRoles = await getRolesList()
     const managers = await getManagersList()
     // New employee questions
@@ -36,6 +37,7 @@ const newEmployee = async () => {
         },
     ]
 
+    // Assign variables to employee info based on questions above
     const {
         newEmployeeFirstName, 
         newEmployeeLastName, 
@@ -43,9 +45,11 @@ const newEmployee = async () => {
         newEmployeeManager
     } = await runPrompt(newEmployeeQuestions)
     
+    // Find role title in db and get the correpsonding role id
     const foundRole = await pool.query(`SELECT id FROM roles WHERE title = '${newEmployeeRole}';`)
     const roleId = parseInt(foundRole.rows.map(row => row.id))
 
+    // Same as above with managers, except assign NULL to manager if user selects 'None'
     if (newEmployeeManager === 'None') {
         managerId = 'NULL'
     } else {
@@ -57,6 +61,7 @@ const newEmployee = async () => {
         managerId = parseInt(foundManagerId.rows.map(row => row.id))
     }
 
+    // Add new employee to db
     await pool.query(
         `INSERT INTO employees (first_name, last_name, role_id, manager_id)
         VALUES ('${newEmployeeFirstName}', '${newEmployeeLastName}', ${roleId}, ${managerId});`
