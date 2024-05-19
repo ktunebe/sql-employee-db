@@ -5,22 +5,26 @@ const {runPrompt} = require('./prompt')
 
 
 const newDepartment = async () => {
-    // Ask for new department name
-    const newDepartmentQuestion = {
-        message: 'Enter name of new department:',
-        name: 'newDepartmentName',
-        validate: (input) => input !== ''
+    try {
+        // Ask for new department name
+        const newDepartmentQuestion = {
+            message: 'Enter name of new department:',
+            name: 'newDepartmentName',
+            validate: (input) => input !== ''
+        }
+    
+        const {newDepartmentName} = await runPrompt(newDepartmentQuestion)
+    
+        // Add new department to db
+        await pool.query(
+            `INSERT INTO departments (name)
+            VALUES ('${newDepartmentName}');`
+        )
+    
+        console.log('\nDepartment Added!\n')
+    } catch (err) {
+        console.error('Error: ', err)
     }
-
-    const {newDepartmentName} = await runPrompt(newDepartmentQuestion)
-
-    // Add new department to db
-    await pool.query(
-        `INSERT INTO departments (name)
-        VALUES ('${newDepartmentName}');`
-    )
-
-    console.log('\nDepartment Added!\n')
 }
 
 module.exports = {newDepartment}
