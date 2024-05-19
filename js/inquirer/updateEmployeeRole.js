@@ -1,6 +1,6 @@
 require('dotenv').config()
 const pool = require('../../db/dbConnection')
-const {runPrompt} = require('../inquirer/prompt')
+const {runPrompt} = require('./prompt')
 const {getEmployeeNames, getRolesList} = require('../../db/getFromDb')
 
 const updateEmployeeRole = async () => {

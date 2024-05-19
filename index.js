@@ -6,7 +6,7 @@ const pool = require('./db/dbConnection')
 // Setting up express server
 const express = require('express')
 // Init function will run entire program
-const {init} = require('./js/inquirer/inquiryChain')
+const {init} = require('./js/terminalFunctions/inquiryChain')
 
 const app = express()
 const PORT = process.env.PORT || 3001

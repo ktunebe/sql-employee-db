@@ -1,34 +1,27 @@
 // .env file configuration
 require('dotenv').config()
-// npm packages
-const inquirer = require('inquirer')
 // Using Pool from pg npm to set up connection to postgres
 const pool = require('../../db/dbConnection')
 
+const {displayDepartmentsTable, displayRolesTable, displayEmployeesTable} = require('./displayTables')
 const {getDepartmentsList, getManagersList, getRolesList} = require('../../db/getFromDb')
-const {initialQuestion} = require('../questions/initialQuestion')
-const {newEmployee} = require('../questions/addEmployee')
-const {newRole} = require('../questions/addRole')
-const {newDepartment} = require('../questions/addDepartment')
-const {updateEmployeeRole} = require('../questions/updateEmployeeRole')
-const {runPrompt} = require('./prompt')
-
-const displayTable = async (table) => {
-    const results = await pool.query(`SELECT * FROM ${table};`)
-    const mappedResults = results.rows.map(row => ({...row}))
-    console.table(mappedResults)
-}
+const {initialQuestion} = require('../inquirer/initialQuestion')
+const {newEmployee} = require('../inquirer/addEmployee')
+const {newRole} = require('../inquirer/addRole')
+const {newDepartment} = require('../inquirer/addDepartment')
+const {updateEmployeeRole} = require('../inquirer/updateEmployeeRole')
+const {runPrompt} = require('../inquirer/prompt')
 
 const inquiryChain = async () => {
     const {initialPromptChoice} = await runPrompt(initialQuestion)
     if (initialPromptChoice === 'View All Employees') {
-        displayTable('employees')
+        displayEmployeesTable()
         init()
     } else if (initialPromptChoice === 'View All Roles') {
-        displayTable('roles')
+        displayRolesTable()
         init()
     } else if (initialPromptChoice === 'View All Departments') {
-        displayTable('departments')
+        displayDepartmentsTable()
         init()
     } else if (initialPromptChoice === 'Add an Employee') {
         await newEmployee()

@@ -1,6 +1,6 @@
 require('dotenv').config()
 const pool = require('../../db/dbConnection')
-const {runPrompt} = require('../inquirer/prompt')
+const {runPrompt} = require('./prompt')
 const {getDepartmentsList} = require('../../db/getFromDb')
 
 const newRole = async () => {

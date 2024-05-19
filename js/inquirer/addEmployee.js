@@ -1,6 +1,6 @@
 require('dotenv').config()
 const pool = require('../../db/dbConnection')
-const {runPrompt} = require('../inquirer/prompt')
+const {runPrompt} = require('./prompt')
 const {getManagersList, getRolesList} = require('../../db/getFromDb')
 
 const newEmployee = async () => {
@@ -65,7 +65,7 @@ const newEmployee = async () => {
         VALUES ('${newEmployeeFirstName}', '${newEmployeeLastName}', ${roleId}, ${managerId});`
     )
 
-    console.log('New Employee Added!')
+    console.log('\nNew Employee Added!\n')
 }
 
 module.exports = {newEmployee}
