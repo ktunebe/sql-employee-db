@@ -1,7 +1,3 @@
-// .env file configuration
-require('dotenv').config()
-// Using Pool from pg npm to set up connection to postgres
-const pool = require('../../db/dbConnection')
 
 const {displayDepartmentsTable, displayRolesTable, displayEmployeesTable} = require('./displayTables')
 const {getDepartmentsList, getManagersList, getRolesList} = require('../../db/getFromDb')

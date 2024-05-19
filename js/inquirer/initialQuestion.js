@@ -1,5 +1,3 @@
-const inquirer = require('inquirer')
-const pool = require('../../db/dbConnection')
 
 // Main prompt for what the user wants to do when starting the app
 const initialQuestion = {

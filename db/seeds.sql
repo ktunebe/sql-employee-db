@@ -20,8 +20,8 @@ INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES
     ('John', 'Doe', 1, NULL),
     ('Jane', 'Doe', 2, 1),
-    ('Chester', 'Thedog', 3, NULL),
-    ('Herbie', 'Thedog', 4, 3),
+    ('Chester', 'TheDog', 3, NULL),
+    ('Herbie', 'TheDog', 4, 3),
     ('Jim', 'Jones', 5, NULL),
     ('Sally', 'Smith', 6, 5),
     ('Betty', 'Boop', 7, NULL),
