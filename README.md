@@ -1,4 +1,4 @@
-# 12-long-awaited-SQL
+# sql-employee-db
 
 ## Description
 
